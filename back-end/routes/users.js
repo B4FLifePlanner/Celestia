@@ -39,21 +39,6 @@ router.post('/register', async (req, res) => {
      }
 })
 
-router.post('/Add_task/', async (req, res) => {
-    const {Name, Description} = req.body 
-    try {
-        const user = await User.findById(req.user._id); 
-        if (!user) {
-            return res.status(404).send({ message: 'User not found' });
-        }
 
-        user.tasks.push({ Name, Description });
-        await user.save();
-
-        res.status(200).send({ message: 'Task added', task: { Name, Description } });
-    } catch (error) {
-        res.status(500).send({ message: 'Error adding task' });
-    }
-})
 
 module.exports = router
