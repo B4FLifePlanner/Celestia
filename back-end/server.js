@@ -2,6 +2,7 @@ const express = require('express')
 const connectDB = require('./db')
 connectDB()
 const userRoutes = require('./routes/users')
+const taskRoutes = require('./routes/tasks')
 const PORT = process.env.PORT || 5000
 const app = express()
 app.use(express.json())
@@ -10,6 +11,7 @@ app.use(express.json())
 
 
 app.use('/api/users', userRoutes);
+app.use('/work/tasks', taskRoutes)
 
 
 

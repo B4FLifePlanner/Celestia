@@ -14,7 +14,7 @@ const bookSchema = new Schema({
 
 const travelSchema = new Schema({
     Place: {type: String, required: true},
-    Date: {type: String, required: true},
+    Date: {type: Date, required: true},
     Needs: {type: [String], required: true},
 })
 
@@ -22,7 +22,7 @@ const to_doSchema = new Schema({
     Name: {type: String, required: true},
     Description: {type: String, required: true},
     Status: {type: String, enum: ['Not Completed', 'Completed'], default: 'Not Completed', required: true},
-    Deadline: {type: String,  required: true},
+    Deadline: {type: Date,  required: true},
 })
 
 const userSchema = new Schema ({
@@ -30,11 +30,12 @@ const userSchema = new Schema ({
      Role: { type: String, enum: ['manager', 'member', 'personal'],default: 'personal', required: true },
      FirstName: {type: String, required: true},
      LastName: {type: String, required: true},
-     DOB: {type: String, required: true},
+     DOB: {type: Date, required: true},
      Gender: {type: String, required: true},
      Email: {type: String, required: true},
      Password: {type: String, required: true},
      Phone: {type: Number, required: true},
+     TeamId: {type: Schema.Types.ObjectId, ref: 'Team'},
      Book: [bookSchema],
      To_Do: [to_doSchema],
      Travel: [travelSchema],

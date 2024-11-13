@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
         Email,
         Password,
         Phone,
-        To_Do} = req.body;
+        } = req.body;
 
     try {
         const newUser = new User({ 
@@ -26,8 +26,8 @@ router.post('/register', async (req, res) => {
             Gender,
             Email,
             Password,
-            Phone,
-            To_Do})
+            Phone
+            })
         await newUser.save();
         res.status(201).json(
             {user: newUser}
