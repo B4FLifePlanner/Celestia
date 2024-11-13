@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+    
 function AddMemberForm() {
     const [step, setStep] = useState(1);
 
@@ -46,7 +46,7 @@ function AddMemberForm() {
         };
 
         try {
-            const response = await fetch('/add-member?team_Id=YOUR_TEAM_ID', {
+            const response = await fetch('http://localhost:5000/api/teams/add-member', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

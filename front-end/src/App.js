@@ -5,7 +5,7 @@ import AddTask from './components/work/add_task';
 function App() {
   return (
     <div className="App">
-     <AddTask />
+     <AddMemberForm />
     </div>
   );
 }

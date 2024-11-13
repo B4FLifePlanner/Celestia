@@ -1,20 +1,18 @@
 const express = require('express')
 const Task = require('../models/Task')
 
+
 const router = express.Router()
 
-router.post('/Add-Task', async (req, res) => {
-
+router.post('/Add-Task',  async (req, res) => {
     const { 
         Title,
         Info,
         AssignedTo,
         Deadline
-        } = req.body
-    const {team_Id} = req.query.team_Id
+        } = req.body 
      try {
         const newTask = new Task({
-            TeamId: team_Id,
             Title,
             Info,
             AssignedTo,

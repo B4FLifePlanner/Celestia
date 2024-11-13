@@ -35,7 +35,6 @@ const userSchema = new Schema ({
      Email: {type: String, required: true},
      Password: {type: String, required: true},
      Phone: {type: Number, required: true},
-     TeamId: {type: Schema.Types.ObjectId, ref: 'Team'},
      Book: [bookSchema],
      To_Do: [to_doSchema],
      Travel: [travelSchema],

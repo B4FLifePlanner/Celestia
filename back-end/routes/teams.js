@@ -18,11 +18,9 @@ router.post('/add-member', async (req, res) => {
         Phone
         } = req.body;
     
-    const { team_Id } = req.query.team_Id
 
     try {
         const newMember = new User({
-            TeamId: team_Id, 
             FirstName,
             LastName,
             DOB,

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 function AddTask() {
   const [formData, setFormData] = useState({
-    title: '',
-    info: '',
-    assignedTo: '',
-    deadline: '',
+    Title: '',
+    Info: '',
+    AssignedTo: '',
+    Deadline: '',
   });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,7 +21,7 @@ function AddTask() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/Add-Task?team_Id=YOUR_TEAM_ID', {
+      const response = await fetch('http://localhost:5000/api/tasks/Add-Task', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ function AddTask() {
       if (response.ok) {
         setSuccessMessage('Task added successfully!');
         setErrorMessage('');
-        setFormData({ title: '', info: '', assignedTo: '', deadline: '' });
+        setFormData({ Title: '', Info: '', AssignedTo: '', Deadline: '' });
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.error || 'Failed to add task');
@@ -56,9 +56,9 @@ function AddTask() {
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Task Title:</label>
             <input
               type="text"
-              name="title"
+              name="Title"
               onChange={handleChange}
-              value={formData.title}
+              value={formData.Title}
               className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
               required
             />
@@ -66,9 +66,9 @@ function AddTask() {
           <div className="mb-6">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Task Info:</label>
             <textarea
-              name="info"
+              name="Info"
               onChange={handleChange}
-              value={formData.info}
+              value={formData.Info}
               className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
               required
             />
@@ -79,10 +79,10 @@ function AddTask() {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="assignedTo"
+                  name="AssignedTo"
                   value="Person 1"
                   onChange={handleChange}
-                  checked={formData.assignedTo === 'Person 1'}
+                  checked={formData.AssignedTo === 'Person 1'}
                   className="mr-2"
                 />
                 Person 1
@@ -90,10 +90,10 @@ function AddTask() {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="assignedTo"
+                  name="AssignedTo"
                   value="Person 2"
                   onChange={handleChange}
-                  checked={formData.assignedTo === 'Person 2'}
+                  checked={formData.AssignedTo === 'Person 2'}
                   className="mr-2"
                 />
                 Person 2
@@ -101,10 +101,10 @@ function AddTask() {
               <label className="flex items-center">
                 <input
                   type="radio"
-                  name="assignedTo"
+                  name="AssignedTo"
                   value="Person 3"
                   onChange={handleChange}
-                  checked={formData.assignedTo === 'Person 3'}
+                  checked={formData.AssignedTo === 'Person 3'}
                   className="mr-2"
                 />
                 Person 3
@@ -115,9 +115,9 @@ function AddTask() {
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Deadline:</label>
             <input
               type="date"
-              name="deadline"
+              name="Deadline"
               onChange={handleChange}
-              value={formData.deadline}
+              value={formData.Deadline}
               className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
               required
             />
@@ -126,7 +126,7 @@ function AddTask() {
           <div className="flex justify-end mt-10 gap-5">
             <button
               type="button"
-              onClick={() => setFormData({ title: '', info: '', assignedTo: '', deadline: '' })}
+              onClick={() => setFormData({ Title: '', Info: '', AssignedTo: '', Deadline: '' })}
               className="w-2/6 bg-white dark:bg-white text-gray-800 dark:text-gray-900 font-semibold py-2 px-4 rounded hover:bg-gray-400 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             >
               Cancel
