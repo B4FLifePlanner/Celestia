@@ -35,6 +35,7 @@ function AddMemberForm() {
             return;
         }
 
+        const TeamId = localStorage.getItem('TeamId')
         const payload = {
             FirstName: formData.firstName,
             LastName: formData.lastName,
@@ -51,7 +52,7 @@ function AddMemberForm() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(payload, TeamId),
             });
 
             if (!response.ok) {

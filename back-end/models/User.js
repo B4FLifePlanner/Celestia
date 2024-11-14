@@ -28,6 +28,7 @@ const to_doSchema = new Schema({
 const userSchema = new Schema ({
      date_joined: { type: Date, default: Date.now() },
      Role: { type: String, enum: ['manager', 'member', 'personal'],default: 'personal', required: true },
+     TeamId : {type: Schema.Types.ObjectId, ref: 'Team'},
      FirstName: {type: String, required: true},
      LastName: {type: String, required: true},
      DOB: {type: Date, required: true},

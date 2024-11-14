@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const User = require('../models/User')
 const router = express.Router()
 
@@ -15,9 +16,11 @@ router.post('/add-member', async (req, res) => {
         Gender,
         Email,
         Password,
-        Phone
+        Phone,
+        TeamId
         } = req.body;
     
+        const teamObjectId = new mongoose.Types.ObjectId(TeamId); 
 
     try {
         const newMember = new User({
@@ -28,11 +31,18 @@ router.post('/add-member', async (req, res) => {
             Email,
             Password,
             Phone,
-            Role: 'member'
+            Role: 'member',
+            TeamId: teamObjectId
         })
         await newMember.save();
         res.status(201).json(
             {user: newMember}
+        );
+
+        await Team.findByIdAndUpdate(
+            teamObjectId, 
+            { $push: { Members: newMember._id } },
+            { new: true }
         );
     }
     catch (error) {
