@@ -1,6 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function UserTable({users}) {
+function UserTable() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const CurrentUser = '6735c71d8f67523de640f1e7'; 
+        const response = await axios.get('http://localhost:5000/slam/api/teams', { 
+          params: { CurrentUser } 
+        });
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
+  }, []);
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-200">
@@ -13,20 +30,20 @@ function UserTable({users}) {
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Gender</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Date of Birth</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Phone Number</th>
-            <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Role</th>
+            <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Role<button onClick={() => console.log(users)}>Test</button></th>
           </tr>
         </thead>
         <tbody>
           {users.map((user, index) => (
             <tr key={index} className="hover:bg-gray-50">
-              <td className="px-4 py-2 border">{user.firstName}</td>
-              <td className="px-4 py-2 border">{user.lastName}</td>
-              <td className="px-4 py-2 border">{user.email}</td>
-              <td className="px-4 py-2 border">{user.password}</td>
-              <td className="px-4 py-2 border">{user.gender}</td>
-              <td className="px-4 py-2 border">{user.dob}</td>
-              <td className="px-4 py-2 border">{user.phone}</td>
-              <td className="px-4 py-2 border">{user.role}</td>
+              <td className="px-4 py-2 border">{user.FirstName}</td>
+              <td className="px-4 py-2 border">{user.LastName}</td>
+              <td className="px-4 py-2 border">{user.Email}</td>
+              <td className="px-4 py-2 border">{user.Password}</td>
+              <td className="px-4 py-2 border">{user.Gender}</td>
+              <td className="px-4 py-2 border">{new Date(user.DOB).toLocaleDateString()}</td>
+              <td className="px-4 py-2 border">{user.Phone}</td>
+              <td className="px-4 py-2 border">{user.Role}</td>
             </tr>
           ))}
         </tbody>

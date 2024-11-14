@@ -6,23 +6,22 @@ const router = express.Router()
 
 router.get('/api/teams', async (req, res) => {
     try {
-        const { CurrentUser } = req.body; 
-        
+        const {CurrentUser} = req.query; 
         
         const team = await Team.findOne({
             $or: [
                 { leaderId: CurrentUser },
                 { Members: CurrentUser }
             ]
-        }).populate('leaderId')     
-        .populate('Members');
+        })
+        .populate('leaderId')
+        .populate('Members')
         
         if (!team) {
             return res.status(404).json({ message: 'Team not found for this user' });
         }
-        
-        
-        const NeededDataUsers = [team.leaderId,...team.Members]
+
+        const NeededDataUsers = [team.leaderId, ...team.Members];
         
         res.status(200).json(NeededDataUsers);
     } catch (error) {
