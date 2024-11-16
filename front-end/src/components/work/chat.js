@@ -8,7 +8,6 @@ function Chat() {
   return (
     <div className="max-w-full h-screen mx-auto bg-[#E7EDF9] dark:bg-[#010B13] flex flex-col">
 
-      {/* Background Image */}
       <div className="relative h-32 md:h-48 overflow-hidden hidden sm:block">
         <img src={background} alt="Background Image" className="object-cover w-full h-full" />
       </div>

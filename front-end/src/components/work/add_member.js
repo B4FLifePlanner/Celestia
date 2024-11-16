@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-    
+
 function AddMemberForm() {
     const [step, setStep] = useState(1);
 
@@ -35,7 +35,7 @@ function AddMemberForm() {
             return;
         }
 
-        
+
         const payload = {
             FirstName: formData.firstName,
             LastName: formData.lastName,
@@ -45,8 +45,8 @@ function AddMemberForm() {
             Phone: formData.phone,
             Password: formData.password,
             confirmPassword: formData.confirmPassword,
+            TeamId: "67387ac5f5b86462be34d5b7"
         };
-
         try {
             const response = await fetch('http://localhost:5000/api/teams/add-member', {
                 method: 'POST',

@@ -40,8 +40,6 @@ const userSchema = new Schema ({
         Book: [bookSchema],
         To_Do: [to_doSchema],
         Travel: [travelSchema],
-     
-
 })
 
 

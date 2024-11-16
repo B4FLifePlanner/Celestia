@@ -1,7 +1,8 @@
 const express = require('express')
-const mongoose = require('mongoose')
+const Team = require('../models/Team'); // Add this line
+
 const User = require('../models/User')
-const checkManagerRole = require('../middlewares/checkManagerRole')
+// const checkManagerRole = require('../middlewares/checkManagerRole')
 const router = express.Router()
 
 
@@ -9,7 +10,7 @@ const router = express.Router()
 
 
 
-router.post('/add-member', checkManagerRole, async (req, res) => {
+router.post('/add-member', async (req, res) => {
     const { 
         FirstName,
         LastName,
@@ -19,15 +20,22 @@ router.post('/add-member', checkManagerRole, async (req, res) => {
         Password,
         confirmPassword,
         Phone,
+        TeamId
         } = req.body;
-
+        
     
 
     try {
-        const teamId = req.teamId
+
+        const team = await Team.findById(TeamId);
+        if (!team) {
+            return res.status(404).json({ error: 'Team not found' });
+        }
+
+
         const newMember = new User({
             Role: 'member',
-            TeamId: teamId,
+            TeamId,
             FirstName,
             LastName,
             DOB,
@@ -36,17 +44,18 @@ router.post('/add-member', checkManagerRole, async (req, res) => {
             Phone,
             Password,
             confirmPassword,
+            
         })
         await newMember.save();
+
+        team.Members.push(newMember._id);
+        await team.save();
+        
         res.status(201).json(
             {user: newMember}
         );
 
-        await Team.findByIdAndUpdate(
-            teamObjectId, 
-            { $push: { Members: newMember._id } },
-            { new: true }
-        );
+        await Team.findById(TeamId)
     }
     catch (error) {
         res.status(400).json({ error: error.message });
