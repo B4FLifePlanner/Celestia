@@ -7,8 +7,8 @@ function UserTable() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const CurrentUser = '6735c71d8f67523de640f1e7'; 
-        const response = await axios.get('http://localhost:5000/slam/api/teams', { 
+        const CurrentUser = '673844b58db164cad9d63751'; 
+        const response = await axios.get('http://localhost:5000/api/teams', { 
           params: { CurrentUser } 
         });
         setUsers(response.data);
@@ -30,7 +30,7 @@ function UserTable() {
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Gender</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Date of Birth</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Phone Number</th>
-            <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Role<button onClick={() => console.log(users)}>Test</button></th>
+            <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Role</th>
           </tr>
         </thead>
         <tbody>
