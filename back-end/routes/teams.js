@@ -10,7 +10,7 @@ const router = express.Router()
 
 
 
-router.post('/add-member', async (req, res) => {
+router.post('/add-member/:currentUser', async (req, res) => {
     const { 
         FirstName,
         LastName,
@@ -20,22 +20,28 @@ router.post('/add-member', async (req, res) => {
         Password,
         confirmPassword,
         Phone,
-        TeamId
         } = req.body;
-        
+        const CurrentUser = req.params.currentUser;
     
 
     try {
 
-        const team = await Team.findById(TeamId);
+         
+        
+        const team = await Team.findOne({
+            
+                leaderId: CurrentUser 
+            
+        })
+        .populate('leaderId')        
         if (!team) {
-            return res.status(404).json({ error: 'Team not found' });
+            return res.status(404).json({ message: 'Team not found for this user' });
         }
 
 
         const newMember = new User({
             Role: 'member',
-            TeamId,
+            TeamId: team._id,
             FirstName,
             LastName,
             DOB,
@@ -54,8 +60,6 @@ router.post('/add-member', async (req, res) => {
         res.status(201).json(
             {user: newMember}
         );
-
-        await Team.findById(TeamId)
     }
     catch (error) {
         res.status(400).json({ error: error.message });
