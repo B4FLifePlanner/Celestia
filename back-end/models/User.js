@@ -26,19 +26,20 @@ const to_doSchema = new Schema({
 })
 
 const userSchema = new Schema ({
-     date_joined: { type: Date, default: Date.now() },
-     Role: { type: String, enum: ['manager', 'member', 'personal'],default: 'personal', required: true },
-     TeamId : {type: Schema.Types.ObjectId, ref: 'Team'},
-     FirstName: {type: String, required: true},
-     LastName: {type: String, required: true},
-     DOB: {type: Date, required: true},
-     Gender: {type: String, required: true},
-     Email: {type: String, required: true},
-     Password: {type: String, required: true},
-     Phone: {type: Number, required: true},
-     Book: [bookSchema],
-     To_Do: [to_doSchema],
-     Travel: [travelSchema],
+    date_joined: { type: Date, default: Date.now() },
+        Role: { type: String, enum: ['manager', 'member', 'personal'],default: 'personal', required: true },
+        TeamId : {type: Schema.Types.ObjectId, ref: 'Team', required: false, default:null},
+        FirstName: {type: String, required: true},
+        LastName: {type: String, required: true},
+        DOB: {type: Date, required: true},
+        Gender: {type: String, required: true},
+        Email: {type: String, required: true},
+        Phone: {type: Number, required: true},
+        Password: {type: Number, required: true},
+        confirmPassword: {type: Number, required: true},
+        Book: [bookSchema],
+        To_Do: [to_doSchema],
+        Travel: [travelSchema],
      
 
 })

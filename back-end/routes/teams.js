@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const User = require('../models/User')
+const checkManagerRole = require('../middlewares/checkManagerRole')
 const router = express.Router()
 
 
@@ -8,7 +9,7 @@ const router = express.Router()
 
 
 
-router.post('/add-member', async (req, res) => {
+router.post('/add-member', checkManagerRole, async (req, res) => {
     const { 
         FirstName,
         LastName,
@@ -16,23 +17,25 @@ router.post('/add-member', async (req, res) => {
         Gender,
         Email,
         Password,
+        confirmPassword,
         Phone,
-        TeamId
         } = req.body;
+
     
-        const teamObjectId = new mongoose.Types.ObjectId(TeamId); 
 
     try {
+        const teamId = req.teamId
         const newMember = new User({
+            Role: 'member',
+            TeamId: teamId,
             FirstName,
             LastName,
             DOB,
             Gender,
             Email,
-            Password,
             Phone,
-            Role: 'member',
-            TeamId: teamObjectId
+            Password,
+            confirmPassword,
         })
         await newMember.save();
         res.status(201).json(
