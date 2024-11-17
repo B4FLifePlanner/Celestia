@@ -18,10 +18,11 @@ function AddTask() {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await axios.get( `http://localhost:5000/api/tasks/get-members`, {
-          params: {CurrentUser}
+        const response = await axios.get(`http://localhost:5000/api/tasks/get-members`, {
+          params: { CurrentUser }
         }
         );
+        console.log(response.data)
         setMembers(response.data);
       } catch (error) {
         console.error("Error fetching team members:", error);
@@ -55,7 +56,9 @@ function AddTask() {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/tasks/Add-Task",
-        formData
+        formData ,{
+          params: {CurrentUser}
+        }
       );
 
       if (response.status === 200) {
@@ -74,12 +77,11 @@ function AddTask() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-[#e7edf9] dark:bg-gray-800 p-10 rounded-lg shadow-md w-full max-w-xl">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-6">Add Task</h2>
+      <div className="bg-[#e7edf9] dark:bg-[#010B13] p-10 rounded-lg shadow-md w-full max-w-xl">
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Task Title:</label>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-[#F8F8FF] mb-1">Task Title:</label>
             <input
               type="text"
               name="Title"
@@ -90,7 +92,7 @@ function AddTask() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Task Info:</label>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-[#F8F8FF] mb-1">Task Info:</label>
             <textarea
               name="Info"
               onChange={handleChange}
@@ -100,29 +102,31 @@ function AddTask() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Assign To:</label>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-[#F8F8FF] mb-1">Assign To:</label>
             {members.length > 0 ? (
               <div className="mt-2 space-y-2">
-                {members.map((member, index) => (
-                  <label key={index} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      name="AssignedTo"
-                      value={member}
-                      onChange={handleChange}
-                      checked={formData.AssignedTo.includes(member)}
-                      className="mr-2"
-                    />
-                    {`${member.FirstName} ${member.LastName}`}
-                  </label>
-                ))}
+                <div className="space-x-10 flex items-center dark:text-[#F8F8FF] ">
+                  {members.map((member) => (
+                    <label key={member.id} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="AssignedTo"
+                        value={member.id}
+                        onChange={handleChange}
+                        checked={formData.AssignedTo.includes(member.id)}
+                        className="mr-2"
+                      />
+                      {`${member.FirstName} ${member.LastName}`}
+                    </label>
+                  ))}
+                </div>
               </div>
             ) : (
-              <p className="text-sm text-gray-500">No team members found.</p>
+              <p className="text-sm text-black dark:text-[#F8F8FF]">No team members found.</p>
             )}
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Deadline:</label>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-[#F8F8FF] mb-1">Deadline:</label>
             <input
               type="date"
               name="Deadline"
@@ -136,13 +140,13 @@ function AddTask() {
             <button
               type="button"
               onClick={() => setFormData({ Title: "", Info: "", AssignedTo: [], Deadline: "" })}
-              className="w-2/6 bg-white text-gray-800 font-semibold py-2 px-4 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+              className="w-2/8 bg-[#F8F8FF] text-[#010B13] font-semibold py-2 px-4 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-2/6 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+              className="w-2/8 bg-[#7C9ED9] text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             >
               Add Task
             </button>
