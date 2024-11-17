@@ -47,7 +47,7 @@ function AddMemberForm({ onClose }) {
 
     try {
       // Send POST request to the backend
-      const CurrentUser = '673844b58db164cad9d63751'
+      const CurrentUser = '6739d745ced132b914ce971f'
       const response = await axios.post('http://localhost:5000/api/teams/add-member', payload, { 
         params: { CurrentUser } 
       });

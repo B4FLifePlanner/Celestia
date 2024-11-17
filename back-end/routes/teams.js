@@ -46,6 +46,7 @@ router.post('/add-member', async (req, res) => {
         Role: 'member', // Assuming Role is a property in the User schema
         FirstName,
         LastName,
+        TeamId: team._id,
         DOB,
         Gender,
         Email,
