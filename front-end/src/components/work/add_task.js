@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function AddTask() {
   const [formData, setFormData] = useState({
@@ -21,12 +22,9 @@ function AddTask() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/tasks/Add-Task', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const CurrentUser = '673844b58db164cad9d63751'
+      const response = await axios('http://localhost:5000/api/tasks/Add-Task', formData, {
+        params: { CurrentUser }
       });
 
       if (response.ok) {
@@ -82,7 +80,7 @@ function AddTask() {
                   name="AssignedTo"
                   value="Person 1"
                   onChange={handleChange}
-                  checked={formData.AssignedTo === 'Person 1'}
+                  checked={formData.AssignedTo === "Person 1"}
                   className="mr-2"
                 />
                 Person 1

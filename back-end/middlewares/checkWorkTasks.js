@@ -5,15 +5,11 @@ const mongoose = require('mongoose');
 
 const checkUserRole = async (req, res, next) => {
     try {
-        const userId = req.params.userId;
+        const CurrentUser = req.query;
 
-        // Validate ObjectId
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ message: 'Invalid User ID format' });
-        }
 
         // Find user by ID
-        const user = await User.findById(userId);
+        const user = await User.findById(CurrentUser);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -22,7 +18,7 @@ const checkUserRole = async (req, res, next) => {
 
         // Role-based query assignment
         if (user.Role === 'member') {
-            req.taskQuery = { AssignedTo: mongoose.Types.ObjectId(userId) }; // Query for member
+            req.taskQuery = { AssignedTo: CurrentUser }; // Query for member
         } else if (user.Role === 'manager') {
             const team = await Team.findById(user.TeamId);
             if (!team) {
