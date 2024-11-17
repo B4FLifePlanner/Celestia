@@ -11,16 +11,18 @@ function AddTask() {
   const [members, setMembers] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+
   const CurrentUser = '6739d745ced132b914ce971f'
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await axios.get( `http://localhost:5000/api/teams/get-members`, {
-          params: CurrentUser
+        const response = await axios.get( `http://localhost:5000/api/tasks/get-members`, {
+          params: {CurrentUser}
         }
         );
-        setMembers(response.data.members || []);
+        setMembers(response.data);
       } catch (error) {
         console.error("Error fetching team members:", error);
       }
@@ -101,14 +103,14 @@ function AddTask() {
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Assign To:</label>
             {members.length > 0 ? (
               <div className="mt-2 space-y-2">
-                {members.map((member) => (
-                  <label key={member._id} className="flex items-center">
+                {members.map((member, index) => (
+                  <label key={index} className="flex items-center">
                     <input
                       type="checkbox"
                       name="AssignedTo"
-                      value={member._id}
+                      value={member}
                       onChange={handleChange}
-                      checked={formData.AssignedTo.includes(member._id)}
+                      checked={formData.AssignedTo.includes(member)}
                       className="mr-2"
                     />
                     {`${member.FirstName} ${member.LastName}`}
