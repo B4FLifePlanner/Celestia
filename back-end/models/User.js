@@ -22,7 +22,7 @@ const to_doSchema = new Schema({
     Name: {type: String, required: true},
     Description: {type: String, required: true},
     Status: {type: String, enum: ['Not Completed', 'Completed'], default: 'Not Completed', required: true},
-    Deadline: {type: Date,  required: true},
+    Deadline: {type: Date,  required: true },
 })
 
 const userSchema = new Schema ({

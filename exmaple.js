@@ -1,11 +1,5 @@
-class LinkedList {
-    constructor(node, pointer) {
-        this.node = node
-        this.pointer = pointer
-    }
 
-    linkedListOutput = (arr1, arr2) => {
-        revArr1 = arr1.reverse()
-        revArr2 = arr2.reverse() 
-    }
-}
+
+const specificDate = new Date('2024-11-17'); 
+const dayName = days[specificDate.getDay()];
+console.log(specificDate.getDay());

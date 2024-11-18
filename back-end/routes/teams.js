@@ -61,7 +61,7 @@ router.post('/add-member', async (req, res) => {
       team.Members.push(newMember._id);
       await team.save();
   
-      // Respond with the created member (excluding the password)
+      // Respond with the  created member (excluding the password)
       res.status(201).json({ user: newMember });
     } catch (error) {
       console.error('Error adding member:', error);
