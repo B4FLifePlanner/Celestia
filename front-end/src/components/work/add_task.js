@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
 
 function AddTask() {
@@ -107,7 +108,7 @@ function AddTask() {
               <div className="mt-2 space-y-2">
                 <div className="space-x-10 flex items-center dark:text-[#F8F8FF] ">
                   {members.map((member) => (
-                    <label key={member.id} className="flex items-center">
+                    <label key={member.id} className="flex items-center ">
                       <input
                         type="checkbox"
                         name="AssignedTo"

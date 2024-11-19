@@ -40,7 +40,6 @@ router.post('/add-To-Do', async (req, res) => {
     const {
         Name,
         Description,
-        Status,
         Deadline
     } = req.body
     const { CurrentUser } = req.query
@@ -54,7 +53,6 @@ router.post('/add-To-Do', async (req, res) => {
         const newToDo = {
             Name,
             Description,
-            Status,
             Deadline
         };
 
@@ -71,7 +69,6 @@ router.post('/add-To-Do', async (req, res) => {
 
 router.get('/get-tasks', async (req, res) => {
     const { CurrentUser } = req.query
-    console.log(CurrentUser)
     try {
         const user = await User.findById(CurrentUser)
         if (!user) {
@@ -84,6 +81,36 @@ router.get('/get-tasks', async (req, res) => {
     catch (error) {
         console.error('Error getting tasks', error);
         res.status(400).json({ error: error.message });
+    }
+})
+
+router.patch('/update-task-status', async (req, res) => {
+    const { CurrentUser } = req.query;
+    const { taskId, newStatus } = req.body;
+
+    try {
+        // Fetch the user by their ID
+        const user = await User.findById(CurrentUser);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Find the specific task by taskId
+        const task = user.To_Do.id(taskId); // Using Mongoose's subdocument query helper
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+
+        // Update the task's status
+        task.Status = newStatus;
+
+        // Save the updated user document
+        await user.save();
+
+        res.status(200).json({ message: "Task status updated successfully", task });
+    } catch (error) {
+        console.error("Error updating task status:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 })
 
