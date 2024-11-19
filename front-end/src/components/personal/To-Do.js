@@ -6,6 +6,7 @@ import Button from "./Button";
 function Add_To_Do({ task = {}, onClose }) {
     const [currentTask, setCurrentTask] = useState(task);
 
+
     useEffect(() => {
         if (!task) {
             setCurrentTask({});
@@ -23,7 +24,7 @@ function Add_To_Do({ task = {}, onClose }) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-    
+
         if (name === "Deadline") {
             // If the input is Deadline, we keep the Date object in the state
             setCurrentTask((prevTask) => ({
@@ -39,23 +40,24 @@ function Add_To_Do({ task = {}, onClose }) {
     };
 
     const handleDone = async () => {
+
         const taskToSend = {
             ...currentTask,
             Deadline: currentTask.Deadline, // Send it as a Date object
         };
-    
+
         try {
             const CurrentUser = '6739d745ced132b914ce971f'
 
             const response = await axios.post("http://localhost:5000/api/users/add-To-Do", taskToSend, {
-                params: {CurrentUser}
+                params: { CurrentUser }
             });
             console.log("Task added successfully:", response.data);
             onClose();
         } catch (error) {
             console.error("Error adding task:", error);
         }
-    }; 
+    };
 
     return (
         <div className="w-full h-screen flex flex-col p-4 md:p-10 lg:p-20 gap-y-4 font-nunito font-bold bg-[#E7EDF9] dark:bg-[#010B13] text-[#010B13] relative">
@@ -110,8 +112,7 @@ function Add_To_Do({ task = {}, onClose }) {
                 />
             </div>
             <div className="flex gap-x-2 mt-4 md:mt-6 self-center md:self-end">
-                <Button textColor="#E7EDF9" bgColor="#FF0606" hoverColor="#010B13" hoverText="#fff" text="Delete" />
-                <Button textColor="#E7EDF9" bgColor="#7C9ED9" hoverColor="#010B13" hoverText="#fff" text="Done" onClick={() => handleDone()}/>
+                <Button textColor="#E7EDF9" bgColor="#7C9ED9" hoverColor="#010B13" hoverText="#fff" text="Done" onClick={handleDone} />
             </div>
         </div>
     );

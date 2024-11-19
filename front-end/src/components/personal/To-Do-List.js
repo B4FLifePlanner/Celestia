@@ -87,7 +87,7 @@ const Main_ToDo = () => {
     };
 
     return (
-        <div className="bg-[#E7EDF9] dark:bg-[#010B13] h-full flex relative overflow-hidden">
+        <div className={`bg-[#E7EDF9] dark:bg-[#010B13] h-full ${showAddTask ? 'w-1/2' : 'w-full'} flex relative overflow-hidden`}>
             {/* Main Content */}
             <div className="w-full">
                 <div className="relative h-32 md:h-48 overflow-hidden hidden sm:block">
@@ -153,7 +153,7 @@ const Main_ToDo = () => {
             {/* Slide-in Add_To_Do component */}
             {showAddTask && (
                 <div
-                    className={`fixed top-0 right-0 h-full w-full sm:w-1/2 bg-white dark:bg-[#010B13] shadow-lg z-50 transition-all duration-1000 ease-in-out ${showAddTask ? 'mr-0' : 'mr-[-100%]'}`}
+                className={`fixed top-0 right-0 h-full w-full sm:w-1/2 bg-white dark:bg-[#010B13] shadow-lg z-50 transition-transform duration-1000 ease-in-out ${showAddTask ? 'translate-x-0' : 'translate-x-full'}`}  
                 >
                     <Add_To_Do
                         task={selectedTask}
