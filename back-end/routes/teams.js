@@ -7,8 +7,6 @@ const router = express.Router()
 router.get('/teams', async (req, res) => {
     try {
         const {CurrentUser} = req.query; 
-        console.log(CurrentUser);
-        
         const team = await Team.findOne({
             $or: [
                 { leaderId: CurrentUser },
@@ -29,8 +27,6 @@ router.get('/teams', async (req, res) => {
         console.error('Error fetching data:', error);
         res.status(500).json({ message: 'Error retrieving team data' });
     }
-    
-    
 });
 
 
@@ -44,10 +40,12 @@ router.post('/add-member', async (req, res) => {
     Password,
     Phone,
   } = req.body;
-
+  
+  
   try {
 
     const {CurrentUser} = req.query;
+    console.log(CurrentUser);
     if (!CurrentUser) {
       return res.status(400).json({ error: 'Invalid request: Missing CurrentUser' });
     }
@@ -59,7 +57,8 @@ router.post('/add-member', async (req, res) => {
         { Members: CurrentUser },
       ],
     });
-
+    console.log(team);
+    
     if (!team) {
       return res.status(404).json({ error: 'Team not found' });
     }
@@ -68,6 +67,7 @@ router.post('/add-member', async (req, res) => {
     // Create a new member
     const newMember = new User({
       Role: 'member', // Assuming Role is a property in the User schema
+      TeamId: team._id,
       FirstName,
       LastName,
       DOB,

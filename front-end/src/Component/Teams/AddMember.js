@@ -47,7 +47,7 @@ function AddMemberForm({ onClose }) {
 
     try {
       // Send POST request to the backend
-      const CurrentUser = '673844b58db164cad9d63751'
+      const CurrentUser = sessionStorage.getItem('Id');
       const response = await axios.post('http://localhost:5000/api/add-member', payload, { 
         params: { CurrentUser } 
       });

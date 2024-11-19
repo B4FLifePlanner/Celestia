@@ -3,11 +3,11 @@ import axios from 'axios';
 
 function UserTable() {
   const [users, setUsers] = useState([]);
-
+  const Role = sessionStorage.getItem('role')
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const CurrentUser = '673844b58db164cad9d63751'; 
+        const CurrentUser = sessionStorage.getItem('Id'); 
         const response = await axios.get('http://localhost:5000/api/teams', { 
           params: { CurrentUser } 
         });
@@ -25,8 +25,13 @@ function UserTable() {
           <tr className="bg-gray-100">
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">FirstName</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">LastName</th>
+
+            {Role == "manager" &&(
+            <>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Email</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Password</th>
+            </>
+            )}
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Gender</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Date of Birth</th>
             <th className="px-4 py-2 text-left font-semibold text-gray-600 border">Phone Number</th>
@@ -38,8 +43,11 @@ function UserTable() {
             <tr key={index} className="hover:bg-gray-50">
               <td className="px-4 py-2 border">{user.FirstName}</td>
               <td className="px-4 py-2 border">{user.LastName}</td>
-              <td className="px-4 py-2 border">{user.Email}</td>
-              <td className="px-4 py-2 border">{user.Password}</td>
+              {Role == "manager" &&(
+              <>
+                            <td className="px-4 py-2 border">{user.Email}</td>
+                            <td className="px-4 py-2 border">{user.Password}</td>
+              </>)}
               <td className="px-4 py-2 border">{user.Gender}</td>
               <td className="px-4 py-2 border">{new Date(user.DOB).toLocaleDateString()}</td>
               <td className="px-4 py-2 border">{user.Phone}</td>
