@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ToDoStatus from "./ToDoStatus";
-import Button from "./Button";
-
-function Add_To_Do({ task = {}, onClose }) {
+import AddButton from "./AddButton";
+function ToDoInfo({ task = {}, onClose }) {
     const [currentTask, setCurrentTask] = useState(task);
 
 
@@ -60,7 +59,7 @@ function Add_To_Do({ task = {}, onClose }) {
     };
 
     return (
-        <div className="w-full h-screen flex flex-col p-4 md:p-10 lg:p-20 gap-y-4 font-nunito font-bold bg-[#E7EDF9] dark:bg-[#010B13] text-[#010B13] relative">
+        <div className="w-full h-screen flex flex-col p-4 md:p-10 lg:p-20 gap-y-4 font-nunito font-bold bg-[#E7EDF9] dark:bg-[#010B13] text-[#010B13] relative transition-transform duration-1000 ease-in-out">
             <button
                 className="absolute top-4 right-4 text-gray-500 hover:text-red-500 dark:text-[#F8F8FF] text-xl"
                 onClick={onClose}
@@ -112,11 +111,11 @@ function Add_To_Do({ task = {}, onClose }) {
                 />
             </div>
             <div className="flex gap-x-2 mt-4 md:mt-6 self-center md:self-end">
-                <Button textColor="#E7EDF9" bgColor="#7C9ED9" hoverColor="#010B13" hoverText="#fff" text="Done" onClick={handleDone} />
+                <AddButton textColor="#E7EDF9" bgColor="#7C9ED9" hoverColor="#010B13" hoverText="#fff" text="Done" onClick={handleDone}  />
             </div>
         </div>
     );
 }
 
-export default Add_To_Do;
+export default ToDoInfo;
 

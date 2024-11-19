@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cover from '../../imgs/bg-cover-to-do.svg';
 import ToDo from '../../imgs/To-Do-List Icon.svg';
-import Add_To_Do from './To-Do';
-
-const Main_ToDo = () => {
+import ToDoInfo from './To-Do-Add-&Info';
+const ToDoList = () => {
     const [selectedTask, setSelectedTask] = useState({});
     const [showAddTask, setShowAddTask] = useState(false);
     const [tasks, setTasks] = useState([]);
@@ -155,7 +154,7 @@ const Main_ToDo = () => {
                 <div
                 className={`fixed top-0 right-0 h-full w-full sm:w-1/2 bg-white dark:bg-[#010B13] shadow-lg z-50 transition-transform duration-1000 ease-in-out ${showAddTask ? 'translate-x-0' : 'translate-x-full'}`}  
                 >
-                    <Add_To_Do
+                    <ToDoInfo
                         task={selectedTask}
                         onClose={closeTaskDetails} // Close handler
                     />
@@ -165,4 +164,4 @@ const Main_ToDo = () => {
     );
 };
 
-export default Main_ToDo;
+export default ToDoList;
