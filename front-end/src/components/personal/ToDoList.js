@@ -10,19 +10,19 @@ const ToDoList = () => {
     const CurrentUser = '6739d745ced132b914ce971f';
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    useEffect(() => {
-        const fetchToDoTasks = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/api/users/get-tasks', {
-                    params: { CurrentUser },
-                });
-                const tasks = response.data;
-                setTasks(tasks);
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-            }
-        };
 
+    const fetchToDoTasks = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/users/get-tasks', {
+                params: { CurrentUser },
+            });
+            const tasks = response.data;
+            setTasks(tasks);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    };
+    useEffect(() => {
         fetchToDoTasks();
     }, [CurrentUser]);
 
@@ -63,11 +63,13 @@ const ToDoList = () => {
         const nearestDate = getNearestDateForDay(day);
         setSelectedTask({ Name: "", Description: "", Status: "Not Completed", Deadline: nearestDate });
         setShowAddTask(true);
+
     };
-    
+
 
     const closeTaskDetails = () => {
         setShowAddTask(false);
+        fetchToDoTasks()
     };
 
     const getNearestDateForDay = (day) => {
@@ -86,7 +88,7 @@ const ToDoList = () => {
     };
 
     return (
-        <div className={`bg-[#E7EDF9] dark:bg-[#010B13] h-full ${showAddTask ? 'w-1/2' : 'w-full'} flex relative overflow-hidden`}>
+        <div className={`bg-[#E7EDF9] dark:bg-[#010B13] h-full ${showAddTask ? 'w-1/2' : 'w-full'} flex relative `}>
             {/* Main Content */}
             <div className="w-full">
                 <div className="relative h-32 md:h-48 overflow-hidden hidden sm:block">
@@ -115,7 +117,7 @@ const ToDoList = () => {
                                                     <li
                                                         key={task._id}
                                                         className="flex items-center space-x-2 cursor-pointer"
-                                                        onClick={() => handleTaskClick(task)}
+
                                                     >
                                                         <input
                                                             type="checkbox"
@@ -124,8 +126,10 @@ const ToDoList = () => {
                                                             onChange={(e) =>
                                                                 handleTaskStatusChange(task, e.target.checked)
                                                             }
+
                                                         />
-                                                        <label className="text-sm text-[#475569] dark:text-[#cbd5e1] font-semibold peer-checked:line-through">
+                                                        <label className="text-sm text-[#475569] dark:text-[#cbd5e1] font-semibold peer-checked:line-through"
+                                                            onClick={() => handleTaskClick(task)}>
                                                             {task.Name}
                                                         </label>
                                                     </li>
@@ -133,10 +137,11 @@ const ToDoList = () => {
                                             </ul>
                                         ) : null}
                                         <button
-                                            className="w-4/6 border-2 bg-[#F8F8FF] dark:bg-[#061E30] border-[#94a3b8] dark:border-[#64748b] py-3 sm:py-4 rounded-lg text-[#475569] dark:text-[#cbd5e1] flex items-center justify-start space-x-4 sm:space-x-8 px-4 sm:px-6"
+                                            className="w-4/6 border-2 bg-[#F8F8FF] dark:bg-[#061E30] border-[#94a3b8] dark:border-[#64748b] py-1 sm:py-4 rounded-lg text-[#475569] dark:text-[#cbd5e1] flex items-center justify-start space-x-4 sm:space-x-8 px-4 sm:px-6"
                                             onClick={() => handleAddTaskClick(day)}
                                         >
-                                            <div className="flex justify-start items-center space-x-2">
+                                            <div className="flex sm:flex-row flex-col items-center space-x-2">
+
                                                 <span className="material-symbols-outlined text-sm sm:text-base">add</span>
                                                 <span className="font-semibold text-sm sm:text-base">Add Task</span>
                                             </div>
@@ -152,7 +157,7 @@ const ToDoList = () => {
             {/* Slide-in Add_To_Do component */}
             {showAddTask && (
                 <div
-                className={`fixed top-0 right-0 h-full w-full sm:w-1/2 bg-white dark:bg-[#010B13] shadow-lg z-50 transition-transform duration-1000 ease-in-out ${showAddTask ? 'translate-x-0' : 'translate-x-full'}`}  
+                    className={`fixed top-0 right-0 h-full w-full sm:w-1/2 bg-white dark:bg-[#010B13] shadow-lg z-50 transition-transform duration-1000 ease-in-out ${showAddTask ? 'translate-x-0' : 'translate-x-full'}`}
                 >
                     <ToDoInfo
                         task={selectedTask}

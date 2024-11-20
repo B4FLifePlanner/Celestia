@@ -1,6 +1,6 @@
 import React from "react";
 
-function AddButton({ textColor, bgColor, hoverColor, hoverText, text, onClick }) {
+function AddButton({ textColor, bgColor, hoverColor, hoverText, text, onClick}) {
   return (
     <button
       onClick={onClick}

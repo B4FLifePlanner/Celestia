@@ -51,6 +51,26 @@ function ToDoInfo({ task = {}, onClose }) {
             const response = await axios.post("http://localhost:5000/api/users/add-To-Do", taskToSend, {
                 params: { CurrentUser }
             });
+
+            if(response) {onClose()}
+            
+            console.log("Task added successfully:", response.data);
+            
+        } catch (error) {
+            console.error("Error adding task:", error);
+        }
+    };
+
+    const handleDelete = async () => {
+
+        try {
+            const CurrentUser = '6739d745ced132b914ce971f'
+
+            const response = await axios.delete("http://localhost:5000/api/users/delete-task" ,{
+                params: { CurrentUser,
+                    CurrentTask: JSON.stringify(currentTask) } 
+            
+            });
             console.log("Task added successfully:", response.data);
             onClose();
         } catch (error) {
@@ -111,11 +131,12 @@ function ToDoInfo({ task = {}, onClose }) {
                 />
             </div>
             <div className="flex gap-x-2 mt-4 md:mt-6 self-center md:self-end">
+                <AddButton textColor="#E7EDF9" bgColor="#FF0606" hoverColor="#010B13" hoverText="#fff" text="Delete" onClick={handleDelete}  />
                 <AddButton textColor="#E7EDF9" bgColor="#7C9ED9" hoverColor="#010B13" hoverText="#fff" text="Done" onClick={handleDone}  />
             </div>
         </div>
     );
-}
+};
 
 export default ToDoInfo;
 

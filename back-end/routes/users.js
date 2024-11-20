@@ -49,6 +49,20 @@ router.post('/add-To-Do', async (req, res) => {
         if (!user) {
             return res.status(403).json({ error: "Unauthorized access" });
         }
+        const task = user.To_Do.find((task) => {
+            const taskDeadline = new Date(task.Deadline);
+            const inputDeadline = new Date(Deadline);
+        
+            return (
+                task.Name === Name &&
+                task.Description === Description &&
+                taskDeadline.toISOString() === inputDeadline.toISOString()
+            );
+        });
+        
+        if (task) {
+            return res.status(400).json({ message: "Task does already exist" });
+        }
 
         const newToDo = {
             Name,
@@ -58,7 +72,6 @@ router.post('/add-To-Do', async (req, res) => {
 
         user.To_Do.push(newToDo)
         await user.save();
-        console.log(user)
     }
     catch (error) {
         console.error('Error adding task', error);
@@ -113,6 +126,43 @@ router.patch('/update-task-status', async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 })
+
+router.delete('/delete-task', async (req, res) => {
+    const { CurrentUser, CurrentTask } = req.query;
+
+    try {
+        // Parse the serialized CurrentTask object
+        const parsedTask = JSON.parse(CurrentTask);
+
+        const user = await User.findById(CurrentUser);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const task = user.To_Do.find(
+            (task) =>
+                task.Name === parsedTask.Name &&
+                task.Description === parsedTask.Description
+        );
+
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+
+        // Remove the task from the To_Do array
+        user.To_Do = user.To_Do.filter(
+            (t) => t.Name !== parsedTask.Name || t.Description !== parsedTask.Description
+        );
+
+        // Save the user document to persist the changes
+        await user.save();
+
+        return res.status(200).json({ message: "Task deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Server error" });
+    }
+});
 
 
 
