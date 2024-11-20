@@ -44,6 +44,7 @@ router.post('/add-To-Do', async (req, res) => {
     } = req.body
     const { CurrentUser } = req.query
     try {
+        // Fetch the user by their ID
         const user = await User.findById(CurrentUser)
         console.log(user)
         if (!user) {
@@ -72,6 +73,8 @@ router.post('/add-To-Do', async (req, res) => {
 
         user.To_Do.push(newToDo)
         await user.save();
+        return res.status(200).json({ message: "Task Added successfully" });
+
     }
     catch (error) {
         console.error('Error adding task', error);
@@ -83,6 +86,7 @@ router.post('/add-To-Do', async (req, res) => {
 router.get('/get-tasks', async (req, res) => {
     const { CurrentUser } = req.query
     try {
+        // Fetch the user by their ID
         const user = await User.findById(CurrentUser)
         if (!user) {
             return res.status(403).json({ error: "Unauthorized access" });
@@ -133,7 +137,8 @@ router.delete('/delete-task', async (req, res) => {
     try {
         // Parse the serialized CurrentTask object
         const parsedTask = JSON.parse(CurrentTask);
-
+        
+        // Fetch the user by their ID
         const user = await User.findById(CurrentUser);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
