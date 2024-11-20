@@ -29,6 +29,9 @@ function LogIn() {
             if (!response.ok) {
                 setErrorMessage(result.error);
             } else {
+                console.log(result.id)
+                sessionStorage.setItem("id", JSON.stringify(result.id))
+                sessionStorage.setItem("role", JSON.stringify(result.Role))
                 navigate("/Home/Main")
                 setLoginData("")
                 console.log('User Login successfully:', result.Success);
@@ -47,7 +50,7 @@ function LogIn() {
                                 <img onClick={changeMode} src={logoBook} alt='noPhoto' className="inline cursor-pointer ml-8"/>
                                 <p>Login</p>
                             </h1>
-                            <form className="space-y-4 md:space-y-6" action="#">
+                            <form className="space-y-4 md:space-y-6" action="">
                                 <div>
                                     <label
                                         htmlFor="Email"
@@ -56,13 +59,12 @@ function LogIn() {
                                         Email
                                     </label>
                                     <input
-                                        type="text"
+                                        type="email"
                                         name="Email"
                                         value={loginData.Email}
                                         id="Email"
                                         className="bg-[#D9D9D9] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-[#D9D9D9] dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Bassam"
-                                        required=""
                                         onChange={changeState}
                                     />
                                 </div>
@@ -80,7 +82,6 @@ function LogIn() {
                                         id="Password"
                                         className="bg-[#D9D9D9] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-[#D9D9D9] dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Kutet"
-                                        required=""
                                         onChange={changeState}
                                     />
                                 </div>

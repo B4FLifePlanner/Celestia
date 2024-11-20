@@ -26,7 +26,7 @@ function Home() {
         <div className="Home flex h-auto">
             <button 
                     onClick={toggleSidebar} 
-                    className="md:hidden p-2 rounded-md bg-blue-500 fixed top-4 left-[85%]"
+                    className="md:hidden p-2 rounded-md bg-[#6C9BB9] text-textWhite fixed top-5 left-[89%]"
                 >
                     <svg
                         className="w-6 h-6"

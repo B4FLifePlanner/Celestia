@@ -6,8 +6,7 @@ const bookSchema = new Schema({
     Author: {type: String, required: true},
     Name: {type: String, required: true},
     Status: {type: String, enum: ['Not Started', 'Reading', 'Completed'], required: true},
-    Pages: {type: Number, required: true},
-    Current: {type: Number, required: true},
+    Pages: {type: String, required: true},
     Rating: {type: Number, required: true},
     Note: {type: String}
 })

@@ -6,13 +6,20 @@ import ToggleButton from "./ToggleButton";
 import Work from "./Work";
 import Personal from "./Personal";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SideBar({ isSidebarOpen, sidebarRef }) {
     const [activeLink, setActiveLink] = useState("personal");
+    const navigate = useNavigate()
 
     const handleToggle = (link) => {
         setActiveLink(link);
     };
+    let role = JSON.parse(sessionStorage.getItem("role"))
+    const handleLogout = ()=>{
+        sessionStorage.clear()
+        navigate("/")
+    }
 
     return (
         <aside
@@ -36,7 +43,7 @@ function SideBar({ isSidebarOpen, sidebarRef }) {
                     </Link>
                 </ul>
             </div>
-            <ToggleButton activeLink={activeLink} onToggle={handleToggle} />
+            {role === "personal" ? "" : <ToggleButton activeLink={activeLink} onToggle={handleToggle} />}
             <div className="flex justify-center">
                 <div className="w-[200px] h-[2px] mt-10 bg-textDark"></div>
             </div>
@@ -45,6 +52,14 @@ function SideBar({ isSidebarOpen, sidebarRef }) {
             </div>
             <div className="flex justify-center">
                 <div className="w-[200px] h-[2px] mt-8 bg-textDark"></div>
+            </div>
+            <div className="flex justify-center items-center h-full">
+                <button
+                    onClick={handleLogout}
+                    type="button"
+                    className={`${role === "personal" ? "mt-[-155px]": "mt-[-300px]"} py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-[#7C9ED9] hover:bg-blue-600 focus:outline-none`}>
+                    Logout
+                </button>
             </div>
         </aside>
     );

@@ -7,6 +7,7 @@ const router = express.Router()
 
 
 let data = []
+
 router.post('/registerPoint', async (req, res) => {
     async function fetchData() {
         try {
@@ -62,8 +63,7 @@ router.post('/registerPoint', async (req, res) => {
         res.status(201).json({user: newUser});
     }
     catch (error) {
-        res.status(400).json({ error: error.message });
-        console.log(res.status(400).json({ error: error.message }))
+        res.status(400).json({ error: error.message });    
     }
 })
 

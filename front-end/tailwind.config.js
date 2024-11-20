@@ -14,7 +14,7 @@ module.exports = {
         "textWhite": "#F8F8FF",
         "textDark" : "#010B13",
         "textBlue": "#7C9ED9",
-        "toggleButton": "#E7EDF9"
+        "toggleButton": "#E7EDF9",
       }
     },
   },
